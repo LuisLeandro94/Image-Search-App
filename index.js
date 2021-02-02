@@ -1,3 +1,21 @@
+
+function programarCarregamentoTexto() {
+  $('.dots').on('click',function(){
+    $(this).closest("h6").find(".more").show();
+    $(this).closest(".card").css('height','auto');
+    $(this).hide();
+  });
+
+  $('.textArrow').on('click',function(){
+    $(this).closest("h6").find(".more").hide();
+    $(this).closest(".card").css('height','auto');
+    $(this).closest("h6").find(".dots").show();
+  });
+};
+
+
+
+
 function procura() {
   var link =
     "https://api.unsplash.com/photos/?client_id=60R9shKlaRd74MMgoYq1Qy6cOzgz9R8tyKifF7zXhlw&language=en-US&per_page=24&order_by=latest&page=";
@@ -9,6 +27,7 @@ function procura() {
     success: function (data, status, response) {
       adicionarFotos(data);
       resize();
+      programarCarregamentoTexto();
     },
   });
 }
@@ -43,7 +62,7 @@ function criarFoto(foto) {
 
   // criar botao
   var buttonD = document.createElement("a");
-  buttonD.className = "btn btn-secondary pull-right";
+  buttonD.className = "btn btn-secondary pull-right downloadBtn";
   buttonD.appendChild(download);
 
   // criar h5
@@ -54,7 +73,28 @@ function criarFoto(foto) {
   // criar h6
   var h6 = document.createElement("h6");
   h6.className = "card-title";
-  h6.innerText = foto.description;
+
+  if (foto.description != "" && foto.description != undefined) {
+    if (foto.description.length > 64) {
+      h6.innerText = foto.description.substr(0, 64);
+
+      var spanDots = document.createElement("span");
+      spanDots.className = "dots";
+      spanDots.innerText = " ...";
+
+      var iconArrow = document.createElement("i");
+      iconArrow.className = "fa fa-arrow-up textArrow";
+
+      var spanMore = document.createElement("span");
+      spanMore.className = "more";
+      spanMore.innerText = foto.description.substr(64, foto.description.length);
+      spanMore.appendChild(iconArrow);
+      h6.appendChild(spanDots);
+      h6.appendChild(spanMore);
+    } else {
+      h6.innerText = foto.description;
+    }
+  }
 
   // criar div filha
   var div = document.createElement("div");
@@ -130,7 +170,7 @@ function procuraSearch(event) {
   var search = $("#search-input").val();
   debugger;
   if (search == "" || search == undefined) {
-    $("#Modal").modal('show');
+    $("#Modal").modal("show");
   } else {
     var url =
       "https://api.unsplash.com/search/photos?query=" +
@@ -143,6 +183,7 @@ function procuraSearch(event) {
       success: function (data) {
         adicionarFotosBySeacrh(data);
         resize();
+        programarCarregamentoTexto();
       },
     });
   }
@@ -173,8 +214,10 @@ function newTab() {
   var window = window.open(foto.urls.regular);
 }
 
+
 programarCarregamentoPagina();
 programarBotoesPaginacao();
 programarBotaoSearch();
 
 var page = 1;
+
