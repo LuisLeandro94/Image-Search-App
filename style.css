@@ -1,3 +1,16 @@
-.card-margin {
+.navbar{
+  position: fixed;
+    width: 100%;
+    z-index: 9;
+}
+.btn-secondary {
+  color: #fff;
+  background-color: #c8c8c8;
+  border-color: #c8c8c8;
+}
+.card{
   margin-bottom: 10px;
+}
+section{
+  padding: 100px 0;
 }
