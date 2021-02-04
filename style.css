@@ -107,4 +107,14 @@ section {
 .card-description {
   position: relative;
   margin-bottom: 35px;
+  font-family: Lucida Bright;
+}
+
+.card-title {
+  font-family: Lucida Bright;
+}
+
+.navbar-brand {
+  font-family: Brush Script MT;
+  font-size: 40px;
 }
