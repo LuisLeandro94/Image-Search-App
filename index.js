@@ -20,12 +20,27 @@ function procura() {
     url: linkPaged,
     type: "get",
     async: true,
-    success: function (data, status, response) {
+    success: function (data) {
       adicionarFotos(data);
       resize();
       programarCarregamentoTexto();
     },
   });
+}
+
+function getCount() {
+  var count = 0;
+  var link =
+    "https://api.unsplash.com/stats/total?client_id=60R9shKlaRd74MMgoYq1Qy6cOzgz9R8tyKifF7zXhlw";
+  $.ajax({
+    url: link,
+    type: "get",
+    async: false,
+    success: function (data) {
+      count = data.total_photos / 24;
+    },
+  });
+  return count;
 }
 
 function adicionarFotos(dataResposta) {
@@ -95,10 +110,11 @@ function criarFoto(foto) {
   download.className = "fa fa-download";
 
   // criar botao
-  var buttonD = document.createElement("button");
+  var buttonD = document.createElement("a");
   buttonD.className = "btn btn-secondary pull-right downloadBtn";
+  buttonD.setAttribute("href", foto.urls.regular);
+  buttonD.setAttribute("target", "_blank");
   buttonD.appendChild(download);
-  buttonD.id = "button";
 
   // criar h5
   var h5 = document.createElement("h5");
@@ -107,7 +123,7 @@ function criarFoto(foto) {
 
   // criar h6
   var h6 = document.createElement("h6");
-  h6.className = "card-title";
+  h6.className = "card-description";
 
   if (foto.description != "" && foto.description != undefined) {
     if (foto.description.length > 64) {
@@ -166,13 +182,16 @@ function programarCarregamentoPagina() {
   $(window).on("load", procura);
 }
 
-
-
 function anterior() {
   if (page == 1) {
     page = 1;
   } else {
+    var c = getCount();
     page = page - 1;
+    if(page < c)
+    {
+      $("#seguinte").closest("li").removeClass("disabled");
+    }
     if (page == 1) {
       $("#anterior").closest("li").addClass("disabled");
     }
@@ -181,28 +200,18 @@ function anterior() {
 }
 
 function seguinte() {
+  var c = getCount();
   page = page+1;
-  $("#anterior").closest("li").removeClass("disabled");
-  procura();
-}
 
-  const checkpoint = 50;
-
-  var number = 4;
-
-  window.addEventListener("scroll", () => {
-  const currentScroll = window.pageYOffset;
-  if (currentScroll <= checkpoint) {
-    opacity = 1 - currentScroll / checkpoint;
-  } else {
-    opacity = 0;
+  debugger;
+  if(page == c)
+  {
+    $("#seguinte").closest("li").addClass("disabled");
   }
-      for (i = 4; i > 0; i--) {
-        var x = $(".card")[number - i];
-        $(x).css("opacity", opacity);
-      }
-      number += 4;
-});
+  else {
+    $("#anterior").closest("li").removeClass("disabled");
+    procura();}
+}
 
 function programarBotoesPaginacao() {
   var botaoAnterior = document.getElementById("anterior");
@@ -228,7 +237,7 @@ function procuraSearch(event) {
     var url =
       "https://api.unsplash.com/search/photos?query=" +
       search +
-      "&client_id=60R9shKlaRd74MMgoYq1Qy6cOzgz9R8tyKifF7zXhlw";
+      "&per_page=24&client_id=60R9shKlaRd74MMgoYq1Qy6cOzgz9R8tyKifF7zXhlw";
     $.ajax({
       url: url,
       type: "GET",
@@ -280,12 +289,7 @@ var popover = new bootstrap.Popover(document.querySelector('.navbar-brand'), {
   container: 'body'
 })
 
-// function programarBotaoDownload() {
-//   $(".button").on("click", window.open(foto.urls.regular));
-// }
-
 programarCarregamentoPagina();
-// programarBotaoDownload();
 programarBotoesPaginacao();
 programarBotaoSearch();
 
