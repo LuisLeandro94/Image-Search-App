@@ -1,40 +1,99 @@
-.navbar{
+.navbar {
   position: fixed;
-    width: 100%;
-    z-index: 9;
+  width: 100%;
+  z-index: 9;
 }
 .btn-secondary {
   color: #fff;
   background-color: #c8c8c8;
   border-color: #c8c8c8;
 }
-.card{
+.card {
   margin-bottom: 10px;
 }
-section{
+section {
   padding: 100px 0;
 }
-.downloadBtn{
+.downloadBtn {
   position: absolute;
-    bottom: 8px;
-    right: 16px;
+  bottom: 8px;
+  right: 16px;
 }
 
-.more{display: none;}
-.dots{
+.more {
+  display: none;
+}
+.dots {
   font-size: 16px;
   font-weight: 900;
   color: gray;
 }
-.dots:hover{
+.dots:hover {
   cursor: pointer;
 }
 
-.textArrow{
+.textArrow {
   margin-left: 14%;
-color: #9b9b9b;
+  color: #9b9b9b;
 }
 
-.textArrow:hover{
+.textArrow:hover {
   cursor: pointer;
+}
+
+.navbar-collapse {
+  display: flex;
+}
+
+.navbar-expand-lg {
+  flex-wrap: nowrap;
+}
+
+.not-found {
+  display: none;
+}
+
+.container-error {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200px;
+}
+
+.center-txt {
+  text-align: center;
+}
+
+.sizing {
+  font-family: Consolas;
+  font-weight: bold;
+  font-size: 70px;
+  border: 10px solid black;
+  border-radius: 50%;
+  height: 130px;
+  width: 130px;
+  margin-left: 86px;
+  margin-bottom: 0px;
+}
+
+.fa-hat-wizard {
+  margin-right: 5px;
+}
+
+.hide {
+  display: none;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20vh);
+  visibility: hidden;
+  transition: opacity 0.6s ease-out, transform 1.2s ease-out;
+  will-change: opacity, visibility;
+}
+.fade-in.is-visible {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
 }

@@ -19,13 +19,12 @@
             crossorigin="anonymous">
         <link rel="stylesheet"
             href="./style.css">
-        <script src="https://use.fontawesome.com/3a779987cf.js"></script>
+        <script src="https://kit.fontawesome.com/bc856760eb.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-light">
-            <img src="icon.png" alt="" width="30" height="24"
-                class="d-inline-block align-top">
-            <a class="navbar-brand mr-auto mr-lg-0 text-dark" href="#">ImageWizard</a>
+                <i class="fas fa-hat-wizard fa-2x"></i>
+            <a class="navbar-brand mr-auto mr-lg-0 text-dark" href="#">ImagePlay</a>
             <div class="navbar-collapse offcanvas-collapse"
                 id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
@@ -45,7 +44,9 @@
             </div>
         </nav>
 
+        <div class = "no-results">
 
+        </div>
         <section class="details-card">
             <div class="container">
                 <div class="row" id="contentorFotos">
@@ -70,20 +71,18 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal
-                                title</h5>
-                            <button type="button" class="close"
+                            <h5 class="modal-title" id="exampleModalLabel">Search Error</h5>
+                            <button type="button" class="close" id ="close"
                                 data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
+                            <p>Please provide a valid search text.</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary"
+                            <button type="button" id="modal-button" class="btn btn-secondary"
                                 data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save
-                                changes</button>
                         </div>
                     </div>
                 </div>

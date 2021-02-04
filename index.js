@@ -1,4 +1,3 @@
-
 function programarCarregamentoTexto() {
   $('.dots').on('click',function(){
     $(this).closest("h6").find(".more").show();
@@ -12,9 +11,6 @@ function programarCarregamentoTexto() {
     $(this).closest("h6").find(".dots").show();
   });
 };
-
-
-
 
 function procura() {
   var link =
@@ -49,10 +45,48 @@ function adicionarFotosBySeacrh(dataResposta) {
 
   var len = dataResposta.results.length;
 
-  for (var i = 0; i < len; i++) {
-    var foto = dataResposta.results[i];
-    criarFoto(foto);
+  if(len != 0)
+  {
+    for (var i = 0; i < len; i++) {
+      var foto = dataResposta.results[i];
+        criarFoto(foto);
+    }
   }
+  else
+  {
+    noResults(foto);
+    $("#anterior").closest("li").addClass("hide");
+    $("#seguinte").closest("li").addClass("hide");
+  }
+}
+
+function noResults(foto) {
+  //criar h1
+  var h3 = document.createElement("h3");
+  h3.innerText = "Nothing to show here :/";
+  //criar 0
+  var h1 = document.createElement("p");
+  h1.className = "center-txt sizing";
+  h1.innerText = "0";
+  //criar h2
+  var h4 = document.createElement("h4");
+  h4.innerText = "results";
+  h4.className = "center-txt";
+  // criar div pai
+  var firstDiv = document.createElement("div");
+
+  var divPrincipal = document.createElement("div");
+  // adicionar filhos à div pai
+  firstDiv.appendChild(divPrincipal);
+
+  divPrincipal.appendChild(h3);
+  divPrincipal.appendChild(h1);
+  divPrincipal.appendChild(h4);
+  // adicionar div pai à pagina/DOM
+
+  var container = document.getElementById("contentorFotos");
+  container.className = "container-error";
+  container.appendChild(firstDiv);
 }
 
 function criarFoto(foto) {
@@ -61,9 +95,10 @@ function criarFoto(foto) {
   download.className = "fa fa-download";
 
   // criar botao
-  var buttonD = document.createElement("a");
+  var buttonD = document.createElement("button");
   buttonD.className = "btn btn-secondary pull-right downloadBtn";
   buttonD.appendChild(download);
+  buttonD.id = "button";
 
   // criar h5
   var h5 = document.createElement("h5");
@@ -125,8 +160,30 @@ function criarFoto(foto) {
   container.appendChild(firstDiv);
 }
 
+// function fotoNewWindow(foto) {
+//   var img = document.createElement("img");
+//   var imgSrc = foto.urls.regular;
+//   img.setAttribute("src", imgSrc);
+
+//   var firstDiv = document.createAttribute("div");
+  
+//   var divPrincipal = document.createElement("div");
+  
+//   firstDiv.appendChild(divPrincipal);
+
+//   divPrincipal.appendChild(img);
+  
+//   var container = document.getElementById("contentorFotos");
+//   container.className = "container-error";
+//   container.appendChild(firstDiv);
+// }
+
 function programarCarregamentoPagina() {
   $(window).on("load", procura);
+}
+
+function programarCarregamentoIcon() {
+  $(".navbar-brand").on("click", procura);
 }
 
 function anterior() {
@@ -142,9 +199,24 @@ function anterior() {
 }
 
 function seguinte() {
-  page = page + 1;
+  page = page+1;
   $("#anterior").closest("li").removeClass("disabled");
   procura();
+}
+
+function fadeOnScroll()
+{
+  const checkpoint = 100;
+
+  window.addEventListener("scroll", () => {
+  const currentScroll = window.pageYOffset;
+  if (currentScroll <= checkpoint) {
+    opacity = 1 - currentScroll / checkpoint;
+  } else {
+    opacity = 0;
+  }
+    document.querySelector(".row").style.opacity = opacity;
+});
 }
 
 function programarBotoesPaginacao() {
@@ -159,10 +231,6 @@ function programarBotaoSearch() {
   var botaoSearch = document.getElementById("search-button");
 
   botaoSearch.addEventListener("click", procuraSearch);
-}
-
-function programarBotaoDownload() {
-  buttonD.addEventListener("click", newTab);
 }
 
 function procuraSearch(event) {
@@ -189,6 +257,19 @@ function procuraSearch(event) {
   }
 }
 
+$('.search-button').on('click', function(event) { // Fired on 'keyup' event
+
+  if($('.details-card').children().length === 0) { // Checking if list is empty
+
+    $('.not-found').css('display', 'block'); // Display the Not Found message
+
+  } else {
+
+    $('.not-found').css('display', 'none'); // Hide the Not Found message
+
+  }
+});
+
 function resize() {
   var h = 0;
   var nmrRead = 0;
@@ -210,14 +291,24 @@ function resize() {
   });
 }
 
-function newTab() {
-  var window = window.open(foto.urls.regular);
-}
-
+// function programarBotaoDownload() {
+//   $(".button").on("click", window.open(foto.urls.regular));
+// }
 
 programarCarregamentoPagina();
+// programarBotaoDownload();
+programarCarregamentoIcon();
 programarBotoesPaginacao();
 programarBotaoSearch();
 
-var page = 1;
 
+$(document).ready(function(){
+  $("#modal-button").click(function(){
+      $("#Modal").modal('hide');
+  });
+  $("#close").click(function() {
+    $("#Modal").modal('hide');
+  });
+})
+
+var page = 1;
