@@ -149,6 +149,7 @@ function criarFoto(foto) {
 
   var divPrincipal = document.createElement("div");
   divPrincipal.className = "card";
+  divPrincipal.id = "";
   // adicionar filhos à div pai
   firstDiv.appendChild(divPrincipal);
 
@@ -157,34 +158,15 @@ function criarFoto(foto) {
   // adicionar div pai à pagina/DOM
 
   var container = document.getElementById("contentorFotos");
+  container.className = "row";
   container.appendChild(firstDiv);
 }
-
-// function fotoNewWindow(foto) {
-//   var img = document.createElement("img");
-//   var imgSrc = foto.urls.regular;
-//   img.setAttribute("src", imgSrc);
-
-//   var firstDiv = document.createAttribute("div");
-  
-//   var divPrincipal = document.createElement("div");
-  
-//   firstDiv.appendChild(divPrincipal);
-
-//   divPrincipal.appendChild(img);
-  
-//   var container = document.getElementById("contentorFotos");
-//   container.className = "container-error";
-//   container.appendChild(firstDiv);
-// }
 
 function programarCarregamentoPagina() {
   $(window).on("load", procura);
 }
 
-function programarCarregamentoIcon() {
-  $(".navbar-brand").on("click", procura);
-}
+
 
 function anterior() {
   if (page == 1) {
@@ -204,9 +186,9 @@ function seguinte() {
   procura();
 }
 
-function fadeOnScroll()
-{
-  const checkpoint = 100;
+  const checkpoint = 50;
+
+  var number = 4;
 
   window.addEventListener("scroll", () => {
   const currentScroll = window.pageYOffset;
@@ -215,9 +197,12 @@ function fadeOnScroll()
   } else {
     opacity = 0;
   }
-    document.querySelector(".row").style.opacity = opacity;
+      for (i = 4; i > 0; i--) {
+        var x = $(".card")[number - i];
+        $(x).css("opacity", opacity);
+      }
+      number += 4;
 });
-}
 
 function programarBotoesPaginacao() {
   var botaoAnterior = document.getElementById("anterior");
@@ -291,13 +276,16 @@ function resize() {
   });
 }
 
+var popover = new bootstrap.Popover(document.querySelector('.navbar-brand'), {
+  container: 'body'
+})
+
 // function programarBotaoDownload() {
 //   $(".button").on("click", window.open(foto.urls.regular));
 // }
 
 programarCarregamentoPagina();
 // programarBotaoDownload();
-programarCarregamentoIcon();
 programarBotoesPaginacao();
 programarBotaoSearch();
 
