@@ -1,3 +1,5 @@
+var page = 1;
+
 // Função para abrir e fechar a descrição
 function programarCarregamentoTexto() {
     $('.dots').on('click', function() {
@@ -31,7 +33,7 @@ function procura() {
         },
     });
 }
- 
+
 // Pedido AJAX para a last page
 function getCount() {
     var count = 0;
@@ -180,8 +182,8 @@ function criarFoto(foto) {
 
     divPrincipal.appendChild(img);
     divPrincipal.appendChild(div);
-    //Adicionar o Card à pagina
 
+    //Adicionar o Card à pagina
     var container = document.getElementById("contentorFotos");
     container.className = "row";
     container.appendChild(firstDiv);
@@ -264,19 +266,6 @@ function procuraSearch(event) {
     }
 }
 
-$('.search-button').on('click', function(event) { // Fired on 'keyup' event
-
-    if ($('.details-card').children().length === 0) { // Checking if list is empty
-
-        $('.not-found').css('display', 'block'); // Display the Not Found message
-
-    } else {
-
-        $('.not-found').css('display', 'none'); // Hide the Not Found message
-
-    }
-});
-
 // Resize ao tamanho do card
 function resize() {
     var h = 0;
@@ -294,9 +283,7 @@ function resize() {
                 $(x).css("height", h + 304);
                 if ($(x).height() > 600) {
                     $(x).css("height", $(x).height() - 304);
-
                 }
-
             }
             nmrRead = 0;
             h = 0;
@@ -353,5 +340,3 @@ $(document).ready(function() {
         $("#Modal").modal('hide');
     });
 })
-
-var page = 1;
