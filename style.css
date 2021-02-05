@@ -140,3 +140,38 @@ html {
 .fa-hat-wizard {
   color: white;
 }
+
+.page-link {
+  background-color: #4a535d;
+  color: white;
+  height: 43px;
+  padding: 0.56rem 2rem;
+}
+
+.page-link:hover {
+  background-color: #6c757d;
+  color: white;
+}
+
+.page-link:focus {
+  background-color: #6c757d;
+  color: white;
+}
+
+.pagination {
+  margin-top: 100px;
+}
+
+.page-item:last-child .page-link {
+  border-top-right-radius: 1.25rem;
+  border-bottom-right-radius: 1.25rem;
+}
+
+.page-item:first-child .page-link {
+  border-top-left-radius: 1.25rem;
+  border-bottom-left-radius: 1.25rem;
+}
+
+.bg-dark {
+  background-color: #4a535d !important;
+}
