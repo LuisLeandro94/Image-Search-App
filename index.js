@@ -1,3 +1,4 @@
+// Função para abrir e fechar a descrição
 function programarCarregamentoTexto() {
   $('.dots').on('click',function(){
     $(this).closest("h6").find(".more").show();
@@ -12,6 +13,7 @@ function programarCarregamentoTexto() {
   });
 };
 
+// Pedido AJAX geral
 function procura() {
   var link =
     "https://api.unsplash.com/photos/?client_id=60R9shKlaRd74MMgoYq1Qy6cOzgz9R8tyKifF7zXhlw&language=en-US&per_page=24&order_by=latest&page=";
@@ -28,6 +30,7 @@ function procura() {
   });
 }
 
+// Pedido AJAX para a last page
 function getCount() {
   var count = 0;
   var link =
@@ -43,6 +46,7 @@ function getCount() {
   return count;
 }
 
+// Adiciona as fotos
 function adicionarFotos(dataResposta) {
   $("#contentorFotos").empty();
   console.log(dataResposta);
@@ -55,6 +59,7 @@ function adicionarFotos(dataResposta) {
   }
 }
 
+// Adiciona as fotos por pesquisa
 function adicionarFotosBySeacrh(dataResposta) {
   $("#contentorFotos").empty();
 
@@ -75,6 +80,7 @@ function adicionarFotosBySeacrh(dataResposta) {
   }
 }
 
+// Cria o texto quando a pesquisa não retorna resultados
 function noResults(foto) {
   //criar h1
   var h3 = document.createElement("h3");
@@ -104,24 +110,25 @@ function noResults(foto) {
   container.appendChild(firstDiv);
 }
 
+// Cria um template de um card
 function criarFoto(foto) {
-  // criar imagem
+  // Criar Imagem NewTab
   var download = document.createElement("i");
   download.className = "fa fa-download";
 
-  // criar botao
+  // Criar Botão NewTab
   var buttonD = document.createElement("a");
   buttonD.className = "btn btn-secondary pull-right downloadBtn";
   buttonD.setAttribute("href", foto.urls.regular);
   buttonD.setAttribute("target", "_blank");
   buttonD.appendChild(download);
 
-  // criar h5
+  // Criar H5 para Nome do Autor
   var h5 = document.createElement("h5");
   h5.className = "card-title";
   h5.innerText = foto.user.name;
 
-  // criar h6
+  // Criar H6 para Descrição da Foto
   var h6 = document.createElement("h6");
   h6.className = "card-description";
 
@@ -129,10 +136,12 @@ function criarFoto(foto) {
     if (foto.description.length > 64) {
       h6.innerText = foto.description.substr(0, 64);
 
+      // Criar uma span para os 3 pontos
       var spanDots = document.createElement("span");
       spanDots.className = "dots";
       spanDots.innerText = " ...";
 
+      // Criar um icone para a seta
       var iconArrow = document.createElement("i");
       iconArrow.className = "fa fa-arrow-up textArrow";
 
@@ -147,41 +156,44 @@ function criarFoto(foto) {
     }
   }
 
-  // criar div filha
+  // Criar Div para o Card
   var div = document.createElement("div");
   div.className = "card-body";
   div.appendChild(h5);
   div.appendChild(h6);
   div.appendChild(buttonD);
 
-  // criar img
+  // Criar a imagem da API
   var img = document.createElement("img");
   img.className = "card-img-top";
   var imgSrc = foto.urls.raw + "&fit=crop&w=500&h=500";
   img.setAttribute("src", imgSrc);
-  // criar div pai
+
+  // Criar Div para o Card completo
   var firstDiv = document.createElement("div");
   firstDiv.className = "col-lg-3 col-md-4 col-sm-5 ";
 
   var divPrincipal = document.createElement("div");
   divPrincipal.className = "card";
   divPrincipal.id = "";
-  // adicionar filhos à div pai
+  
   firstDiv.appendChild(divPrincipal);
 
   divPrincipal.appendChild(img);
   divPrincipal.appendChild(div);
-  // adicionar div pai à pagina/DOM
+  //Adicionar o Card à pagina
 
   var container = document.getElementById("contentorFotos");
   container.className = "row";
   container.appendChild(firstDiv);
 }
 
+// Programa o carregamento de página
 function programarCarregamentoPagina() {
   $(window).on("load", procura);
 }
 
+// Botão anterior da paginação
 function anterior() {
   if (page == 1) {
     page = 1;
@@ -199,6 +211,7 @@ function anterior() {
   procura();
 }
 
+// Botão seguinte da paginação
 function seguinte() {
   var c = getCount();
   page = page+1;
@@ -213,6 +226,7 @@ function seguinte() {
     procura();}
 }
 
+// Programa a paginação
 function programarBotoesPaginacao() {
   var botaoAnterior = document.getElementById("anterior");
   var botaoSeguinte = document.getElementById("seguinte");
@@ -221,12 +235,14 @@ function programarBotoesPaginacao() {
   botaoSeguinte.addEventListener("click", seguinte);
 }
 
+// Programa a search
 function programarBotaoSearch() {
   var botaoSearch = document.getElementById("search-button");
 
   botaoSearch.addEventListener("click", procuraSearch);
 }
 
+// Pedido AJAX para pesquisa
 function procuraSearch(event) {
   event.preventDefault();
   var search = $("#search-input").val();
@@ -264,6 +280,7 @@ $('.search-button').on('click', function(event) { // Fired on 'keyup' event
   }
 });
 
+// Resize ao tamanho do card
 function resize() {
   var h = 0;
   var nmrRead = 0;
@@ -285,31 +302,37 @@ function resize() {
   });
 }
 
-var scrollToTopBtn= document.querySelector(".scrollTop")
+// Quando é que o botão aparece e desaparece
+var scrollToTopBtn = document.querySelector(".scrollTop")
 var rootElement = document.documentElement
 
 function handleScroll() {
-  // do something on scroll
+  // Verifica o scroll total
   var scrollTotal = rootElement.scrollHeight - rootElement.clientHeight
+  // Se o scroll atual for maior que 80% do total
   if ((rootElement.scrollTop / scrollTotal ) > 0.80) {
-    //show button
+    // Mostra o botão de scroll to top
     scrollToTopBtn.style.display = "block"
   } else {
-    //hide button
+    // Esconde o botão
     scrollToTopBtn.style.display = "none"
   }
 }
 
+// Programa o comportamento do scroll to top
 function scrollToTop() {
-  //scroll to top logic
+  // Scroll to top
   rootElement.scrollTo({
     top: 0,
     behavior: "smooth"
   })
 }
+
+// Programa o scroll to top
 scrollToTopBtn.addEventListener("click", scrollToTop)
 document.addEventListener("scroll", handleScroll)
 
+// Popover para o autor no nome da página
 var popover = new bootstrap.Popover(document.querySelector('.navbar-brand'), {
   container: 'body'
 })
@@ -318,7 +341,7 @@ programarCarregamentoPagina();
 programarBotoesPaginacao();
 programarBotaoSearch();
 
-
+// Modal para invalid search
 $(document).ready(function(){
   $("#modal-button").click(function(){
       $("#Modal").modal('hide');
