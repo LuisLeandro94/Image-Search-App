@@ -1,4 +1,4 @@
-# Image Wizzard
+# Image Play
 
 ### Description
 This project was created as an element of evaluation of the subject ***Web Programming I*** of the course of ***Web Development and Multimedia***, at IPCA.
